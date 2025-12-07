@@ -1,0 +1,667 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Delage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e2430;
+            background-color: #e8e2d8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e2430, #bfa171);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .empresa-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .empresa-info h2 {
+            font-family: Georgia, serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #1e2430;
+            color: white;
+            padding: 20px;
+        }
+
+        .section-header h2 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .pilar {
+            margin-bottom: 40px;
+            border-left: 4px solid #bfa171;
+            padding-left: 20px;
+        }
+
+        .pilar h3 {
+            font-family: Georgia, serif;
+            color: #1e2430;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .critico {
+            background-color: #d32f2f;
+        }
+
+        .atencao {
+            background-color: #ff9800;
+        }
+
+        .bom {
+            background-color: #4caf50;
+        }
+
+        .questions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .questions-table th,
+        .questions-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .questions-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .sim {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .nao {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .radar-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .sintomas, .consequencias {
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .sintomas h4, .consequencias h4 {
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, #bfa171, #1e2430);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .cta h3 {
+            font-family: Georgia, serif;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: #1e2430;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">PRISMA BUSINESS HUB</div>
+            <p>Business Check-up Diagnóstico Empresarial</p>
+            <div class="empresa-info">
+                <h2>Delage</h2>
+                <p><strong>Responsável:</strong> Bernard Tapie</p>
+                <p><strong>E-mail:</strong> caue.brioli+bernard@gmail.com</p>
+                <p><strong>Setor:</strong> Delage</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>1. PERCEPÇÃO INICIAL</h2>
+            </div>
+            <div class="section-content">
+                <div class="highlight">
+                    <h3>Situação Crítica Identificada</h3>
+                    <p>Com base no diagnóstico realizado, <strong>todos os 8 pilares fundamentais</strong> da sua empresa apresentam estado crítico, o que representa uma situação de emergência empresarial que requer intervenção imediata.</p>
+                </div>
+
+                <div class="radar-container">
+                    <h3>Mapa de Percepção dos Pilares</h3>
+                    <svg width="400" height="400" viewBox="0 0 400 400">
+                        <!-- Círculos de referência -->
+                        <circle cx="200" cy="200" r="160" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="120" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="80" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                        <circle cx="200" cy="200" r="40" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                        
+                        <!-- Linhas dos eixos -->
+                        <line x1="200" y1="40" x2="200" y2="360" stroke="#e0e0e0" stroke-width="1"/>
+                        <line x1="40" y1="200" x2="360" y2="200" stroke="#e0e0e0" stroke-width="1"/>
+                        <line x1="313.1" y1="86.9" x2="86.9" y2="313.1" stroke="#e0e0e0" stroke-width="1"/>
+                        <line x1="313.1" y1="313.1" x2="86.9" y2="86.9" stroke="#e0e0e0" stroke-width="1"/>
+                        
+                        <!-- Polígono dos valores (todos = 1, raio = 32) -->
+                        <polygon points="200,168 232,200 200,232 168,200" 
+                                fill="rgba(211,47,47,0.3)" 
+                                stroke="#d32f2f" 
+                                stroke-width="2"/>
+                        
+                        <!-- Pontos nos eixos -->
+                        <circle cx="200" cy="168" r="4" fill="#d32f2f"/>
+                        <circle cx="232" cy="200" r="4" fill="#d32f2f"/>
+                        <circle cx="200" cy="232" r="4" fill="#d32f2f"/>
+                        <circle cx="168" cy="200" r="4" fill="#d32f2f"/>
+                        <circle cx="223.1" cy="176.9" r="4" fill="#d32f2f"/>
+                        <circle cx="223.1" cy="223.1" r="4" fill="#d32f2f"/>
+                        <circle cx="176.9" cy="223.1" r="4" fill="#d32f2f"/>
+                        <circle cx="176.9" cy="176.9" r="4" fill="#d32f2f"/>
+                        
+                        <!-- Labels -->
+                        <text x="200" y="30" text-anchor="middle" font-size="10" fill="#1e2430">Estratégia</text>
+                        <text x="200" y="15" text-anchor="middle" font-size="10" fill="#1e2430">Planejamento</text>
+                        <text x="340" y="185" text-anchor="middle" font-size="10" fill="#1e2430">Marketing</text>
+                        <text x="340" y="200" text-anchor="middle" font-size="10" fill="#1e2430">Estratégia</text>
+                        <text x="200" y="385" text-anchor="middle" font-size="10" fill="#1e2430">Vendas</text>
+                        <text x="200" y="395" text-anchor="middle" font-size="10" fill="#1e2430">Performance</text>
+                        <text x="60" y="185" text-anchor="middle" font-size="10" fill="#1e2430">Eficiência</text>
+                        <text x="60" y="200" text-anchor="middle" font-size="10" fill="#1e2430">Operacional</text>
+                        <text x="330" y="70" text-anchor="middle" font-size="10" fill="#1e2430">Gestão</text>
+                        <text x="330" y="85" text-anchor="middle" font-size="10" fill="#1e2430">Financeira</text>
+                        <text x="330" y="330" text-anchor="middle" font-size="10" fill="#1e2430">Liderança</text>
+                        <text x="330" y="345" text-anchor="middle" font-size="10" fill="#1e2430">Pessoas</text>
+                        <text x="70" y="330" text-anchor="middle" font-size="10" fill="#1e2430">Inovação</text>
+                        <text x="70" y="345" text-anchor="middle" font-size="10" fill="#1e2430">Adaptabilidade</text>
+                        <text x="70" y="70" text-anchor="middle" font-size="10" fill="#1e2430">Autonomia</text>
+                        <text x="70" y="85" text-anchor="middle" font-size="10" fill="#1e2430">Empresário</text>
+                    </svg>
+                </div>
+
+                <p><strong>Análise da Percepção:</strong> A empresa Delage apresenta uma situação alarmante com todos os pilares em nível crítico (1/5). Esta é uma condição que compromete severamente a sustentabilidade e o crescimento do negócio, exigindo ação imediata em todas as frentes.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>2. DIAGNÓSTICO DETALHADO POR PILAR</h2>
+            </div>
+            <div class="section-content">
+                <div class="pilar">
+                    <h3>Estratégia e Planejamento</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>A empresa possui um plano estratégico formal e atualizado?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Os objetivos e metas são claros, mensuráveis e conhecidos por toda equipe?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Existe um processo estruturado de acompanhamento e revisão da estratégia?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> A ausência completa de planejamento estratégico coloca a empresa em uma navegação às cegas, sem direção clara e sem critérios para tomada de decisões importantes.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Estratégia de Marketing</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>A empresa conhece profundamente seu público-alvo e personas?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Existe uma estratégia de marketing estruturada e um funil de vendas definido?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>As ações de marketing são mensuradas e otimizadas regularmente?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> Sem estratégia de marketing estruturada, a empresa opera com baixa visibilidade no mercado e desperdício de recursos em ações sem direcionamento.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Performance de Vendas</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Existe um processo de vendas estruturado e documentado?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>A equipe de vendas é treinada regularmente e tem metas claras?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Os resultados de vendas são acompanhados com indicadores específicos?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> A falta de estrutura no processo comercial compromete diretamente o faturamento e a previsibilidade de receitas.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Eficiência Operacional</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Os processos operacionais estão mapeados e padronizados?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>A empresa monitora indicadores de produtividade e qualidade?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Existe um programa de melhoria contínua implementado?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> Processos não padronizados geram ineficiência, desperdício de recursos e inconsistência na qualidade dos produtos/serviços.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Gestão Financeira</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>A empresa possui controles financeiros rigorosos e fluxo de caixa atualizado?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Indicadores financeiros são acompanhados mensalmente?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Existe planejamento financeiro e orçamento anual estruturado?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> Gestão financeira deficiente é uma das principais causas de mortalidade empresarial, comprometendo a sustentabilidade do negócio.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Liderança e Pessoas</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Existe um modelo de liderança definido e cultura organizacional clara?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>A empresa investe em treinamento e desenvolvimento das pessoas?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Há processos estruturados de avaliação de performance e feedback?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> Sem desenvolvimento de liderança e pessoas, a empresa perde talentos e opera com baixa produtividade e engajamento.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Inovação e Adaptabilidade</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>A empresa possui cultura de inovação e busca constante por melhorias?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Monitora tendências do mercado e se adapta rapidamente às mudanças?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Investe em tecnologia e digitalização dos processos?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> Empresas que não inovam ficam obsoletas rapidamente em mercados competitivos e dinâmicos.</p>
+                </div>
+
+                <div class="pilar">
+                    <h3>Autonomia do Empresário</h3>
+                    <span class="status critico">CRÍTICO</span>
+                    
+                    <table class="questions-table">
+                        <tr>
+                            <th>Pergunta</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>O empresário consegue se ausentar sem prejudicar as operações?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Existe uma equipe capacitada para tomar decisões operacionais?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>A empresa possui processos que funcionam independentemente do empresário?</td>
+                            <td><span class="nao">NÃO</span></td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Diagnóstico:</strong> Dependência total do empresário limita o crescimento e cria uma situação de risco operacional constante.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>3. SINTOMAS IDENTIFICADOS</h2>
+            </div>
+            <div class="section-content">
+                <div class="sintomas">
+                    <h4>🚨 Estratégia e Planejamento - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Decisões tomadas de forma reativa, apenas quando surgem problemas</li>
+                        <li>Falta de direcionamento claro sobre onde a empresa quer chegar</li>
+                        <li>Mudanças constantes de rumo sem critérios definidos</li>
+                        <li>Dificuldade para estabelecer prioridades entre as atividades</li>
+                        <li>Equipe desmotivada por não entender os objetivos da empresa</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Estratégia de Marketing - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Dificuldade para atrair novos clientes de forma consistente</li>
+                        <li>Marketing feito sem estratégia, baseado apenas em feeling</li>
+                        <li>Baixo reconhecimento da marca no mercado</li>
+                        <li>Concorrência sempre um passo à frente</li>
+                        <li>Gastos com marketing sem retorno mensurável</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Performance de Vendas - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Vendas inconsistentes, com altos e baixos sem explicação</li>
+                        <li>Equipe comercial sem padrão de atendimento</li>
+                        <li>Perda de propostas para concorrentes frequentemente</li>
+                        <li>Dificuldade para precificar produtos/serviços corretamente</li>
+                        <li>Clientes insatisfeitos com o processo comercial</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Eficiência Operacional - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Retrabalho frequente por falta de padronização</li>
+                        <li>Atrasos constantes nas entregas</li>
+                        <li>Qualidade inconsistente dos produtos/serviços</li>
+                        <li>Desperdício de materiais e recursos</li>
+                        <li>Funcionários confusos sobre como executar as tarefas</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Gestão Financeira - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Não sabe exatamente quanto dinheiro tem disponível</li>
+                        <li>Surpresas desagradáveis no fluxo de caixa</li>
+                        <li>Dificuldade para precificar produtos adequadamente</li>
+                        <li>Mistura de contas pessoais com empresariais</li>
+                        <li>Falta de dinheiro para investimentos necessários</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Liderança e Pessoas - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Alta rotatividade de funcionários</li>
+                        <li>Equipe desmotivada e sem engajamento</li>
+                        <li>Conflitos constantes entre colaboradores</li>
+                        <li>Dificuldade para delegar responsabilidades</li>
+                        <li>Baixa produtividade geral da equipe</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Inovação e Adaptabilidade - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Empresa sempre atrás das tendências do mercado</li>
+                        <li>Resistência a mudanças necessárias</li>
+                        <li>Processos ultrapassados e manuais</li>
+                        <li>Perda de mercado para concorrentes inovadores</li>
+                        <li>Dificuldade para acompanhar evolução tecnológica</li>
+                    </ul>
+                </div>
+
+                <div class="sintomas">
+                    <h4>🚨 Autonomia do Empresário - Sintomas Críticos:</h4>
+                    <ul>
+                        <li>Impossibilidade de tirar férias ou se ausentar</li>
+                        <li>Envolvimento em todas as decisões, mesmo as menores</li>
+                        <li>Sobrecarga de trabalho constante</li>
+                        <li>Empresa para quando o empresário não está presente</li>
+                        <li>Stress e esgotamento físico/mental</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h2>4. CONSEQUÊNCIAS CRÍTICAS</h2>
+            </div>
+            <div class="section-content">
+                <div class="highlight">
+                    <h3>⚠️ ALERTA MÁXIMO: Risco Iminente de Falência</h3>
+                    <p>Com todos os 8 pilares em estado crítico, a empresa Delage está em situação de extrema vulnerabilidade, com <strong>alto risco de fechamento</strong> se não forem tomadas ações emergenciais imediatas.</p>
+                </div>
+
+                <div class="consequencias">
+                    <h4>💰 Consequências Financeiras Imediatas:</h4>
+                    <ul>
+                        <li><strong>Insustentabilidade financeira:</strong> Sem controles adequados, a empresa pode estar operando no vermelho sem perceber</li>
+                        <li><strong>Perda de competitividade:</strong> Impossibilidade de precificar corretamente levará à perda de margem ou mercado</li>
+                        <li><strong>Falta de capital para crescimento:</strong> Sem planejamento, não haverá recursos para investimentos essenciais</li>
+                        <li><strong>Risco de inadimplência:</strong> Fluxo de caixa descontrolado pode levar ao não pagamento de fornecedores e impostos</li>
+                    </ul>
+                </div>
+
+                <div class="consequencias">
+                    <h4>📊 Consequências Operacionais:</h4>
+                    <ul>
+                        <li><strong>Perda total de produtividade:</strong> Processos não padronizados geram desperdício de até 40% dos recursos</li>
+                        <li><strong>Qualidade inconsistente:</strong> Produtos/serviços defeituosos prejudicam a reputação permanentemente</li>
+                        <li><strong>Ineficiência generalizada:</strong> Custo operacional elevado compromete a margem de lucro</li>
+                        <li><strong>Impossibilidade de crescimento:</strong> Estrutura atual não suporta expansão</li>
+                    </ul>
+                </div>
+
+                <div class="consequencias">
+                    <h4>👥 Consequências Humanas:</h4>
+                    <ul>
+                        <li><strong>Colapso da equipe:</strong> Funcionários qualificados abandonarão a empresa por falta de direção</li>
+                        <li><strong>Perda de talentos:</strong> Profissionais competentes procurarão empresas mais estruturadas</li>
+                        <li><strong>Desmotivação total:</strong> Ambiente de trabalho tóxico afetará todos os colaboradores</li>
+                        <li><strong>Esgotamento do empresário:</strong> Sobrecarga levará ao burnout e problemas de saúde</li>
+                    </ul>
+                </div>
+
+                <div class="consequencias">
+                    <h4>🎯 Consequências Estratégicas:</h4>
+                    <ul>
+                        <li><strong>Obsolescência acelerada:</strong> Empresa ficará irrelevante no mercado em questão de meses</li>
+                        <li><strong>Perda de participação de mercado:</strong> Concorrentes dominarão o espaço da Delage</li>
+                        <li><strong>Reputação danificada:</strong> Imagem da empresa no mercado será permanentemente comprometida</li>
+                        <li><strong>Impossibilidade de recuperação:</strong> Depois de certo ponto, será impossível reverter a situação</li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h3>🚨 AÇÃO NECESSÁRIA: INTERVENÇÃO EMERGENCIAL</h3>
+                    <p>Bernard Tapie, a situação da Delage requer <strong>intervenção empresarial emergencial</strong>. Sem ações estruturadas nos próximos 60 dias, a empresa pode entrar em colapso irreversível.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h3>💡 PRÓXIMOS PASSOS: BUSINESS CLINIC EMERGENCIAL</h3>
+            <p>Diante do cenário crítico identificado, recomendamos uma <strong>Business Clinic intensiva</strong> para desenvolver um plano de recuperação estruturado e implementar soluções urgentes nos pilares mais críticos.</p>
+            
+            <p><strong>A Business Clinic incluirá:</strong></p>
+            <ul style="text-align: left; margin-top: 15px;">
+                <li>Plano de ação emergencial (30-60-90 dias)</li>
+                <li>Reestruturação dos processos críticos</li>
+                <li>Implementação de controles financeiros urgentes</li>
+                <li>Definição de estratégia de recuperação</li>
+                <li>Mentoria executiva para implementação</li>
+            </ul>
+            
+            <a href="#" class="btn">AGENDAR BUSINESS CLINIC EMERGENCIAL</a>
+            
+            <p style="margin-top: 20px; font-size: 14px;">
+                <strong>Atenção:</strong> Este é um caso de emergência empresarial. Recomendamos agendamento em até 48 horas.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+```
