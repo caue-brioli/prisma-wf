@@ -1,0 +1,671 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Delage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #1e2430;
+            background-color: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e2430 0%, #2d3748 100%);
+            color: #e8e2d8;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #bfa171;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .company-info {
+            background: #e8e2d8;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 5px solid #bfa171;
+        }
+        
+        .company-info h2 {
+            font-family: Georgia, serif;
+            color: #1e2430;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #bfa171;
+            margin-bottom: 5px;
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 28px;
+            color: #1e2430;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #bfa171;
+            padding-bottom: 10px;
+        }
+        
+        .subsection-title {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            color: #1e2430;
+            margin: 30px 0 15px 0;
+        }
+        
+        /* Radar Chart */
+        .chart-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        /* Status indicators */
+        .status-critico {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        .status-atencao {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .status-bom {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .pilar-card {
+            background: #f8f9fa;
+            border-left: 5px solid #bfa171;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .pilar-title {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            color: #1e2430;
+            margin-bottom: 15px;
+        }
+        
+        .questions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .questions-table th,
+        .questions-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .questions-table th {
+            background: #e8e2d8;
+            color: #1e2430;
+            font-weight: bold;
+        }
+        
+        .sim {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .nao {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        /* Symptoms and Consequences */
+        .symptom-item,
+        .consequence-item {
+            background: #fff;
+            border-left: 4px solid #d32f2f;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .consequence-item {
+            border-left-color: #ff9800;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #1e2430 0%, #2d3748 100%);
+            color: #e8e2d8;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        .cta-button {
+            background: #bfa171;
+            color: #1e2430;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #d4c189;
+            transform: translateY(-2px);
+        }
+        
+        .alert-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .critical-alert {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+            border-top: 1px solid #e8e2d8;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="logo">PRISMA Business Hub</div>
+            <div class="subtitle">Consultoria Estratégica para Crescimento Empresarial</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="company-info">
+            <h2>Informações da Empresa</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Nome da Empresa:</div>
+                    <div>Delage</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Setor:</div>
+                    <div>Delage</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Responsável:</div>
+                    <div>Bernard Tapie</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email:</div>
+                    <div>caue.brioli+bernard@gmail.com</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Perception Analysis -->
+        <div class="section">
+            <h1 class="section-title">1. Análise de Percepção Inicial</h1>
+            
+            <div class="alert-box critical-alert">
+                <strong>⚠️ SITUAÇÃO CRÍTICA IDENTIFICADA</strong><br>
+                Todos os pilares fundamentais do negócio foram avaliados com nota 1, indicando uma situação empresarial que requer intervenção urgente.
+            </div>
+
+            <div class="chart-container">
+                <h3 class="subsection-title">Gráfico de Percepção por Pilar</h3>
+                <svg width="500" height="400" viewBox="0 0 500 400">
+                    <!-- Grid lines -->
+                    <g stroke="#e8e2d8" fill="none">
+                        <polygon points="250,50 350,100 350,200 250,300 150,200 150,100" stroke-width="1"/>
+                        <polygon points="250,90 320,120 320,180 250,240 180,180 180,120" stroke-width="1"/>
+                        <polygon points="250,130 290,140 290,160 250,180 210,160 210,140" stroke-width="1"/>
+                        <polygon points="250,170 260,172 260,178 250,180 240,178 240,172" stroke-width="1"/>
+                    </g>
+                    
+                    <!-- Axis lines -->
+                    <g stroke="#bfa171" stroke-width="1">
+                        <line x1="250" y1="175" x2="250" y2="50"/>
+                        <line x1="250" y1="175" x2="350" y2="100"/>
+                        <line x1="250" y1="175" x2="350" y2="200"/>
+                        <line x1="250" y1="175" x2="250" y2="300"/>
+                        <line x1="250" y1="175" x2="150" y2="200"/>
+                        <line x1="250" y1="175" x2="150" y2="100"/>
+                        <line x1="250" y1="175" x2="320" y2="120"/>
+                        <line x1="250" y1="175" x2="180" y2="120"/>
+                    </g>
+                    
+                    <!-- Data polygon (all values = 1, so very small) -->
+                    <polygon points="250,170 252,172 252,178 250,180 248,178 248,172" 
+                             fill="#d32f2f" fill-opacity="0.3" stroke="#d32f2f" stroke-width="2"/>
+                    
+                    <!-- Labels -->
+                    <text x="250" y="40" text-anchor="middle" font-size="12" fill="#1e2430">Estratégia</text>
+                    <text x="360" y="105" text-anchor="middle" font-size="12" fill="#1e2430">Marketing</text>
+                    <text x="360" y="205" text-anchor="middle" font-size="12" fill="#1e2430">Vendas</text>
+                    <text x="250" y="320" text-anchor="middle" font-size="12" fill="#1e2430">Operacional</text>
+                    <text x="140" y="205" text-anchor="middle" font-size="12" fill="#1e2430">Financeiro</text>
+                    <text x="140" y="105" text-anchor="middle" font-size="12" fill="#1e2430">Liderança</text>
+                    <text x="330" y="115" text-anchor="middle" font-size="12" fill="#1e2430">Inovação</text>
+                    <text x="170" y="115" text-anchor="middle" font-size="12" fill="#1e2430">Autonomia</text>
+                </svg>
+            </div>
+
+            <div class="pilar-card">
+                <h3>Análise da Percepção</h3>
+                <p>A avaliação inicial revela uma percepção extremamente baixa em todos os pilares fundamentais do negócio, com score 1/5 em todas as dimensões. Esta situação indica:</p>
+                <ul style="margin: 15px 0; padding-left: 30px;">
+                    <li><strong>Crise sistêmica:</strong> Todos os aspectos do negócio necessitam atenção imediata</li>
+                    <li><strong>Falta de estrutura:</strong> Ausência de processos, planejamento e controles básicos</li>
+                    <li><strong>Risco operacional elevado:</strong> Empresa vulnerável a choques internos e externos</li>
+                    <li><strong>Necessidade de reestruturação completa:</strong> Intervenção profissional urgente</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 2: Detailed Diagnosis -->
+        <div class="section">
+            <h1 class="section-title">2. Diagnóstico Detalhado por Pilar</h1>
+            
+            <div class="pilar-card">
+                <h3 class="pilar-title">🎯 Estratégia e Planejamento - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui um planejamento estratégico formal documentado?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Existem metas claras definidas para os próximos 12 meses?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa tem processos estruturados para tomada de decisões estratégicas?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Ausência completa de direcionamento estratégico. A empresa opera sem rumo definido, o que compromete todas as outras dimensões do negócio.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">📢 Estratégia de Marketing - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui uma estratégia de marketing definida e documentada?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Existe um processo estruturado para geração de leads?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa tem presença digital organizada e ativa?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Marketing inexistente ou desestruturado, comprometendo severamente a geração de demanda e o posicionamento da marca no mercado.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">💰 Performance de Vendas - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Existe um processo de vendas estruturado e documentado?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui métricas e controles de performance de vendas?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Há treinamento regular da equipe de vendas?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Processo comercial totalmente desestruturado, impactando diretamente na capacidade de conversão e crescimento de receita.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">⚙️ Eficiência Operacional - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Os processos operacionais estão mapeados e padronizados?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Existe controle de qualidade nos produtos/serviços?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa monitora indicadores de produtividade?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Operação caótica sem processos definidos, resultando em ineficiência, desperdícios e baixa qualidade na entrega.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">💼 Gestão Financeira - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui controles financeiros organizados e atualizados?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Existe um fluxo de caixa projetado para os próximos 3 meses?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa conhece sua margem de contribuição por produto/serviço?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Gestão financeira inexistente, colocando a empresa em risco de falência por falta de controle sobre receitas, custos e fluxo de caixa.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">👥 Liderança e Pessoas - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>Existe um organograma claro com funções bem definidas?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui processos de avaliação de desempenho?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Há programas de desenvolvimento e treinamento da equipe?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Estrutura organizacional inexistente, resultando em confusão de papéis, baixa produtividade e alta rotatividade.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">🚀 Inovação e Adaptabilidade - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui processos para captar feedback dos clientes?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Existem iniciativas regulares de melhoria nos produtos/serviços?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa monitora tendências e mudanças no mercado?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Empresa estagnada, sem capacidade de evolução ou adaptação às mudanças do mercado, correndo risco de obsolescência.</p>
+            </div>
+
+            <div class="pilar-card">
+                <h3 class="pilar-title">🎯 Autonomia do Empresário - <span class="status-critico">CRÍTICO (1/5)</span></h3>
+                <table class="questions-table">
+                    <tr>
+                        <th>Questão Diagnóstica</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>O empresário consegue se ausentar da empresa por 1 semana sem impactos?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Existem pessoas capacitadas para tomar decisões na ausência do dono?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>A empresa possui processos que funcionam independente do empresário?</td>
+                        <td class="nao">NÃO</td>
+                    </tr>
+                </table>
+                <p><strong>Diagnóstico:</strong> Dependência total do empresário, criando um gargalo operacional que limita o crescimento e sobrecarrega a liderança.</p>
+            </div>
+        </div>
+
+        <!-- Section 3: Symptoms -->
+        <div class="section">
+            <h1 class="section-title">3. Sintomas Identificados</h1>
+            
+            <div class="alert-box critical-alert">
+                <strong>🚨 ATENÇÃO:</strong> Os sintomas abaixo são manifestações diretas dos problemas estruturais identificados em todos os pilares críticos.
+            </div>
+
+            <div class="symptom-item">
+                <h4>📊 Falta de Direcionamento Estratégico</h4>
+                <p>A empresa opera no "modo bombeiro", reagindo aos problemas conforme surgem, sem um planejamento claro para o futuro. Decisões são tomadas de forma impulsiva e sem análise de impacto.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>📉 Vendas Instáveis e Imprevisíveis</h4>
+                <p>Receita varia drasticamente mês a mês, sem previsibilidade. Dependência excessiva de alguns poucos clientes ou do "boca a boca" para gerar novos negócios.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>💸 Problemas de Fluxo de Caixa</h4>
+                <p>Dificuldades constantes para honrar compromissos financeiros, necessidade frequente de capital de giro, desconhecimento dos custos reais dos produtos/serviços.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>🔄 Retrabalho e Ineficiência Operacional</h4>
+                <p>Produtos/serviços entregues com defeitos, necessidade de refazer trabalhos, reclamações frequentes de clientes sobre qualidade ou prazo.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>😰 Sobrecarga do Empresário</h4>
+                <p>Empresário envolvido em todas as decisões, trabalhando excessivamente, dificuldade para delegar, estresse constante e falta de tempo para atividades estratégicas.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>👥 Alta Rotatividade de Funcionários</h4>
+                <p>Dificuldade para reter talentos, funcionários desmotivados, papéis mal definidos gerando conflitos e confusão na equipe.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>🎯 Falta de Posicionamento no Mercado</h4>
+                <p>Empresa "invisível" para o mercado, concorrência com base apenas em preço, dificuldade para diferenciar-se dos concorrentes.</p>
+            </div>
+
+            <div class="symptom-item">
+                <h4>⏰ Estagnação e Resistência a Mudanças</h4>
+                <p>Empresa opera da mesma forma há anos, resistência a implementar novas tecnologias ou processos, produtos/serviços desatualizados.</p>
+            </div>
+        </div>
+
+        <!-- Section 4: Consequences -->
+        <div class="section">
+            <h1 class="section-title">4. Consequências da Situação Atual</h1>
+            
+            <div class="alert-box">
+                <strong>⚠️ IMPACTO SISTÊMICO:</strong> A situação crítica em todos os pilares cria um ciclo vicioso que compromete a sustentabilidade do negócio a curto e médio prazo.
+            </div>
+
+            <div class="consequence-item">
+                <h4>💀 Risco de Falência</h4>
+                <p>Sem controles financeiros adequados e com instabilidade nas vendas, a empresa está vulnerável a choques econômicos que podem levá-la ao fechamento.</p>
+                <strong>Ação Urgente Necessária:</strong> Implementação imediata de controles financeiros e planejamento de fluxo de caixa.
+            </div>
+
+            <div class="consequence-item">
+                <h4>📉 Perda Acelerada de Market Share</h4>
+                <p>Sem estratégia de marketing e com problemas operacionais, a empresa perde espaço para concorrentes mais estruturados, reduzindo sua participação no mercado.</p>
+                <strong>Ação Urgente Necessária:</strong> Desenvolvimento de estratégia competitiva e melhoria na qualidade da entrega.
+            </div>
+
+            <div class="consequence-item">
+                <h4>🔥 Burnout do Empresário</h4>
+                <p>A sobrecarga excessiva pode levar ao esgotamento físico e mental do empresário, comprometendo ainda mais a capacidade de gestão do negócio.</p>
+                <strong>Ação Urgente Necessária:</strong> Estruturação de processos e desenvolvimento de lideranças internas.
+            </div>
+
+            <div class="consequence-item">
+                <h4>🏃‍♂️ Fuga de Talentos</h4>
+                <p>A falta de estrutura organizacional e instabilidade financeira afasta bons profissionais, deixando a empresa apenas com funcionários de baixa qualificação.</p>
+                <strong>Ação Urgente Necessária:</strong> Criação de estrutura organizacional clara e plano de retenção de talentos.
+            </div>
+
+            <div class="consequence-item">
+                <h4>💸 Perda de Rentabilidade</h4>
+                <p>Sem controle de custos e processos ineficientes, a margem de lucro diminui constantemente, comprometendo a capacidade de investimento e crescimento.</p>
+                <strong>Ação Urgente Necessária:</strong> Análise profunda de custos e otimização de processos operacionais.
+            </div>
+
+            <div class="consequence-item">
+                <h4>🚫 Impossibilidade de Crescimento</h4>
+                <p>Todos os problemas estruturais impedem que a empresa cresça de forma sustentável, mantendo-a estagnada ou em declínio.</p>
+                <strong>Ação Urgente Necessária:</strong> Reestruturação completa com base em um planejamento estratégico sólido.
+            </div>
+
+            <div class="pilar-card" style="background: #f8d7da; border-left-color: #d32f2f;">
+                <h3 style="color: #721c24;">🎯 Conexão com o Desafio Principal</h3>
+                <p>A situação crítica identificada em todos os pilares cria um cenário de <strong>emergência empresarial</strong> que demanda intervenção profissional imediata. Sem uma ação estruturada e coordenada, a empresa tem poucas chances de sobrevivência no médio prazo.</p>
+                
+                <p style="margin-top: 15px;"><strong>A boa notícia:</strong> Quando todos os pilares estão em situação crítica, qualquer melhoria implementada gera impacto significativo e rápido nos resultados. É uma oportunidade única de reestruturação completa para criar uma empresa verdadeiramente sustentável e lucrativa.</p>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 style="font-family: Georgia, serif; margin-bottom: 20px;">🚀 Próximos Passos: Business Clinic Intensiva</h2>
+            
+            <p style="font-size: 18px; margin-bottom: 25px;">
+                <strong>Bernard Tapie</strong>, a situação da <strong>Delage</strong> requer intervenção profissional urgente. 
+                O diagnóstico revelou problemas sistêmicos que comprometem a sustentabilidade do negócio.
+            </p>
+            
+            <div style="background: rgba(191, 161, 113, 0.1); padding: 25px; border-radius: 10px; margin: 25px 0;">
+                <h3 style="color: #bfa171; margin-bottom: 15px;">💡 Business Clinic - Reestruturação Empresarial</h3>
+                <p style="margin-bottom: 15px;"><strong>O que você terá:</strong></p>
+                <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>✅ Plano de ação emergencial (30-60-90 dias)</li>
+                    <li>✅ Reestruturação do modelo de negócios</li>
+                    <li>✅ Implementação de controles financeiros críticos</li>
+                    <li>✅ Estruturação de processos operacionais essenciais</li>
+                    <li>✅ Estratégia comercial para estabilização de receita</li>
+                    <li>✅ Desenvolvimento de lideranças internas</li>
+                    <li>✅ Acompanhamento semanal por 90 dias</li>
+                </ul>
+            </div>
+            
+            <p style="font-size: 16px; margin-bottom: 25px;">
+                <strong>⏰ Tempo é crítico:</strong> Cada dia de atraso na implementação das correções aumenta o risco operacional.
+            </p>
+            
+            <a href="https://calendly.com/prisma-business-hub/business-clinic" class="cta-button">
+                📞 AGENDAR BUSINESS CLINIC URGENTE
+            </a>
+            
+            <p style="font-size: 14px; margin-top: 20px; opacity: 0.9;">
+                Sessão de 2 horas para criar seu plano de reestruturação empresarial<br>
+                <strong>Investimento:</strong> R$ 497 (Valor promocional para casos críticos)
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2024 PRISMA Business Hub - Consultoria Estratégica para Crescimento Empresarial</p>
+            <p>Este relatório é confidencial e destinado exclusivamente para <strong>Bernard Tapie - Delage</strong></p>
+        </div>
+    </div>
+</body>
+</html>
+```
