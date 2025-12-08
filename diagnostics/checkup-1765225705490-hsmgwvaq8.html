@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Prisma</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #1e2430;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; }
+        
+        .header {
+            background: linear-gradient(135deg, #1e2430 0%, #2a3544 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: #e8e2d8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(191, 161, 113, 0.1) 0%, transparent 70%);
+        }
+        
+        .logo-section { margin-bottom: 30px; position: relative; z-index: 1; }
+        .company-name {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 3em; color: #bfa171;
+            margin-bottom: 10px; letter-spacing: 4px;
+        }
+        .tagline {
+            font-size: 1.2em; color: #e8e2d8;
+            letter-spacing: 2px; font-weight: 300;
+        }
+        
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.2em; margin-top: 40px;
+            position: relative; z-index: 1;
+        }
+        .subtitle {
+            font-size: 1.1em; margin-top: 15px;
+            font-weight: 300; position: relative; z-index: 1;
+        }
+        
+        .company-info {
+            background-color: #e8e2d8;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            padding: 20px; background-color: white;
+            border-left: 4px solid #bfa171;
+        }
+        .info-label {
+            font-size: 0.85em; text-transform: uppercase;
+            color: #666; margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .info-value {
+            font-size: 1.2em; font-weight: 600; color: #1e2430;
+        }
+        
+        .section { padding: 50px 40px; }
+        .section-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2em; color: #1e2430;
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 3px solid #bfa171;
+        }
+        .section-subtitle {
+            font-size: 1.3em; color: #bfa171;
+            margin-top: 30px; margin-bottom: 20px; font-weight: 600;
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; color: white;
+        }
+        .challenge-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.4em; margin-bottom: 15px;
+        }
+        .challenge-box p { font-size: 1.1em; line-height: 1.8; }
+        
+        .maturity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; margin: 30px 0;
+        }
+        .pillar-card {
+            background-color: #f9f9f9;
+            padding: 25px; border-radius: 8px;
+            border-top: 4px solid #bfa171;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .pillar-card.critical { border-top-color: #d32f2f; background-color: #fff5f5; }
+        .pillar-card.warning { border-top-color: #ff9800; background-color: #fffaf0; }
+        .pillar-card.good { border-top-color: #4caf50; background-color: #f1f8f4; }
+        
+        .pillar-name { font-size: 1.2em; font-weight: 700; color: #1e2430; margin-bottom: 15px; }
+        .score-display {
+            font-size: 3em; font-weight: 700;
+            text-align: center; margin: 20px 0;
+        }
+        .score-display.critical { color: #d32f2f; }
+        .score-display.warning { color: #ff9800; }
+        .score-display.good { color: #4caf50; }
+        
+        .score-label {
+            text-align: center; font-size: 0.9em;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 10px; font-weight: 600;
+        }
+        .score-label.critical { color: #d32f2f; }
+        .score-label.warning { color: #ff9800; }
+        .score-label.good { color: #4caf50; }
+        
+        .diagnostic-card {
+            background-color: #f9f9f9;
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; border-left: 6px solid #bfa171;
+        }
+        .diagnostic-card.critical { border-left-color: #d32f2f; background-color: #fff5f5; }
+        .diagnostic-card.warning { border-left-color: #ff9800; background-color: #fffaf0; }
+        .diagnostic-card.good { border-left-color: #4caf50; background-color: #f1f8f4; }
+        
+        table {
+            width: 100%; margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th {
+            background-color: #1e2430; color: white;
+            padding: 15px; text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover { background-color: #fafafa; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px; border-radius: 4px;
+            font-size: 0.9em; font-weight: 600;
+        }
+        .status-critical { background-color: #ffebee; color: #d32f2f; }
+        .status-good { background-color: #e8f5e9; color: #4caf50; }
+        
+        .symptoms-list {
+            background-color: #fff5f5;
+            padding: 25px; border-radius: 8px;
+            margin: 20px 0; border-left: 6px solid #d32f2f;
+        }
+        .symptoms-list h4 {
+            color: #d32f2f; font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .symptoms-list ul {
+            list-style: none; padding: 0;
+        }
+        .symptoms-list li {
+            padding: 10px 0 10px 30px;
+            position: relative; line-height: 1.6;
+        }
+        .symptoms-list li:before {
+            content: "⚠️";
+            position: absolute; left: 0;
+        }
+        
+        .consequences-box {
+            background: linear-gradient(135deg, #d32f2f 0%, #e57373 100%);
+            color: white; padding: 30px;
+            border-radius: 8px; margin: 20px 0;
+        }
+        .consequences-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.5em; margin-bottom: 15px;
+        }
+        .consequences-box p {
+            font-size: 1.05em; line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .next-step-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 40px; border-radius: 8px;
+            text-align: center; color: white;
+        }
+        .next-step-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.8em; margin-bottom: 20px;
+        }
+        .next-step-box p {
+            font-size: 1.15em; line-height: 1.8;
+        }
+        
+        .footer {
+            background-color: #1e2430;
+            color: #e8e2d8; padding: 50px 40px;
+            text-align: center;
+        }
+        .footer-highlight {
+            color: #bfa171; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="company-name">PRISMA</div>
+                <div class="tagline">BUSINESS HUB</div>
+            </div>
+            <h1>Business Check-up Personalizado</h1>
+            <p class="subtitle">Diagnóstico Completo para JOAO Brioli • 12 de Janeiro de 2025</p>
+        </div>
+
+        <div class="company-info">
+            <div class="info-item">
+                <div class="info-label">Empresa</div>
+                <div class="info-value">Brioli Consultoria</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Setor</div>
+                <div class="info-value">Consultoria</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Faturamento Anual</div>
+                <div class="info-value">Mais de R$ 100 Milhões</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Responsável</div>
+                <div class="info-value">JOAO Brioli</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">1. Desafio Principal & Panorama Geral</h2>
+            
+            <div class="challenge-box">
+                <h3>🎯 Principal Desafio Identificado</h3>
+                <p>Falta de perspectiva de crescimento</p>
+            </div>
+
+            <h3 class="section-subtitle">Principais Freios de Crescimento Identificados:</h3>
+            <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+                <ul style="list-style-type: none; padding: 0;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">• Gerar novas oportunidades de négocio</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">• Otimizar preços e margens</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">• Definir e otimizar processos</li>
+                    <li style="padding: 8px 0;">• Equipe autonoma e mais liberdade como dono</li>
+                </ul>
+            </div>
+
+            <h3 class="section-subtitle">Maturidade por Pilar:</h3>
+            <div class="maturity-grid">
+                <div class="pillar-card good">
+                    <div class="pillar-name">Estratégia e Planejamento</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Performance de Vendas</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Estratégia de Marketing</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Eficiência Operacional</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Gestão Financeira</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Liderança e Pessoas</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Inovação e Adaptabilidade</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Autonomia do Empresário</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">2. Diagnóstico Detalhado por Pilar</h2>
+            
+            <div class="diagnostic-card good">
+                <h3>📊 PILAR 1: Estratégia e Planejamento</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui plano de negócios estruturado</td>
+                            <td><span class="status-badge status-good">✅ Possui</span></td>
+                        </tr>
+                        <tr>
+                            <td>Metas claras e mensuráveis definidas</td>
+                            <td><span class="status-badge status-good">✅ Possui</span></td>
+                        </tr>
+                        <tr>
+                            <td>Acompanha indicadores regularmente</td>
+                            <td><span class="status-badge status-good">✅ Acompanha</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>💰 PILAR 2: Performance de Vendas</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Processo de vendas padronizado</td>
+                            <td><span class="status-badge status-good">✅ Possui</span></td>
+                        </tr>
+                        <tr>
+                            <td>CRM implementado e em uso</td>
+                            <td><span class="status-badge status-good">✅ Implementado</span></td>
+                        </tr>
+                        <tr>
+                            <td>Metas de vendas são consistentemente atingidas</td>
+                            <td><span class="status-badge status-good">✅ Atinge</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>📢 PILAR 3: Estratégia de Marketing</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Estratégia de marketing estruturada</td>
+                            <td><span class="status-badge status-good">✅ Estruturada</span></td>
+                        </tr>
+                        <tr>
+                            <td>Geração constante de leads qualificados</td>
+                            <td><span class="status-badge status-good">✅ Gera</span></td>
+                        </tr>
+                        <tr>
+                            <td>ROI de marketing é mensurável</td>
+                            <td><span class="status-badge status-good">✅ Mensurável</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>⚙️ PILAR 4: Eficiência Operacional</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Processos mapeados e documentados</td>
+                            <td><span class="status-badge status-good">✅ Mapeados</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tecnologia otimiza operações</td>
+                            <td><span class="status-badge status-good">✅ Otimiza</span></td>
+                        </tr>
+                        <tr>
+                            <td>Indicadores operacionais são acompanhados</td>
+                            <td><span class="status-badge status-good">✅ Acompanha</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>💸 PILAR 5: Gestão Financeira</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fluxo de caixa é controlado rigorosamente</td>
+                            <td><span class="status-badge status-good">✅ Controlado</span></td>
+                        </tr>
+                        <tr>
+                            <td>Indicadores financeiros acompanhados mensalmente</td>
+                            <td><span class="status-badge status-good">✅ Acompanha</span></td>
+                        </tr>
+                        <tr>
+                            <td>Finanças pessoais separadas das empresariais</td>
+                            <td><span class="status-badge status-good">✅ Separadas</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>👥 PILAR 6: Liderança e Pessoas</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Equipe motivada e engajada</td>
+                            <td><span class="status-badge status-good">✅ Motivada</span></td>
+                        </tr>
+                        <tr>
+                            <td>Líderes preparados em todas as áreas</td>
+                            <td><span class="status-badge status-good">✅ Preparados</span></td>
+                        </tr>
+                        <tr>
+                            <td>Consegue atrair e reter talentos</td>
+                            <td><span class="status-badge status-good">✅ Consegue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>🚀 PILAR 7: Inovação e Adaptabilidade</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Produtos/serviços atualizados com o mercado</td>
+                            <td><span class="status-badge status-good">✅ Atualizados</span></td>
+                        </tr>
+                        <tr>
+                            <td>Processos para identificar novas tendências</td>
+                            <td><span class="status-badge status-good">✅ Possui</span></td>
+                        </tr>
+                        <tr>
+                            <td>Empresa se adapta rapidamente a mudanças</td>
+                            <td><span class="status-badge status-good">✅ Adapta</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>🎯 PILAR 8: Autonomia do Empresário</h3>
+                <p><strong>Percepção atual:</strong> Bom (4/5)</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Empresa funciona bem na sua ausência</td>
+                            <td><span class="status-badge status-good">✅ Funciona</span></td>
+                        </tr>
+                        <tr>
+                            <td>Foca no estratégico, não no operacional</td>
+                            <td><span class="status-badge status-good">✅ Estratégico</span></td>
+                        </tr>
+                        <tr>
+                            <td>Possui tempo livre para vida pessoal</td>
+                            <td><span class="status-badge status-good">✅ Possui</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">3. Áreas que Merecem Atenção</h2>
+            
+            <div style="background-color: #f1f8f4; padding: 30px; border-radius: 8px; border-left: 6px solid #4caf50;">
+                <h3 style="color: #4caf50; margin-bottom: 20px;">🎉 Excelente Performance Geral!</h3>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #1e2430;">
+                    <strong>Parabéns, JOAO!</strong> Sua empresa <strong>Brioli Consultoria</strong> demonstra uma maturidade empresarial excepcional, com todos os pilares fundamentais bem estruturados. Isso é especialmente impressionante para uma empresa de consultoria com faturamento superior a R$ 100 milhões.
+                </p>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #1e2430; margin-top: 15px;">
+                    Não foram identificadas áreas críticas que demandem intervenção imediata. Sua empresa está no caminho certo para um crescimento sustentável e escalável.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">4. Oportunidades de Crescimento</h2>
+            
+            <div style="background-color: #fff8f0; padding: 30px; border-radius: 8px; border-left: 6px solid #ff9800;">
+                <h3 style="color: #ff9800; margin-bottom: 20px;">🚀 Próximo Nível de Crescimento</h3>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #1e2430; margin-bottom: 15px;">
+                    Apesar da excelente estrutura atual, você mencionou como desafio principal a <strong>"falta de perspectiva de crescimento"</strong>. Isso sugere que, mesmo com todos os pilares bem estruturados, ainda há oportunidades de otimização para acelerar o crescimento.
+                </p>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #1e2430; margin-bottom: 15px;">
+                    Os freios de crescimento identificados indicam oportunidades específicas para elevar sua empresa ao próximo patamar:
+                </p>
+                <ul style="list-style-type: none; padding-left: 20px;">
+                    <li style="padding: 5px 0;">🔸 <strong>Gerar novas oportunidades de negócio</strong> - Expandir mercados e canais</li>
+                    <li style="padding: 5px 0;">🔸 <strong>Otimizar preços e margens</strong> - Maximizar rentabilidade</li>
+                    <li style="padding: 5px 0;">🔸 <strong>Definir e otimizar processos</strong> - Aumentar eficiência operacional</li>
+                    <li style="padding: 5px 0;">🔸 <strong>Equipe autônoma e mais liberdade como dono</strong> - Escalar liderança</li>
+                </ul>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #1e2430; margin-top: 15px;">
+                    Para uma empresa do seu porte, o foco deve ser na <strong>otimização estratégica</strong> e na <strong>escalabilidade avançada</strong>, visando não apenas manter a excelência atual, mas multiplicar os resultados exponencialmente.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="next-step-box">
+                <h3>🎯 Próximo Passo: Business Clinic Personalizada</h3>
+                <p>
+                    Com base neste diagnóstico abrangente da <strong>Brioli Consultoria</strong>, identificamos que você está em uma posição privilegiada para dar o próximo grande salto de crescimento.
+                </p>
+                <p style="margin-top: 20px;">
+                    Nossa <strong>Business Clinic</strong> será focada em estratégias avançadas de crescimento, otimização de margens e desenvolvimento de novas oportunidades para empresas que já possuem uma base sólida como a sua.
+                </p>
+                <p style="margin-top: 20px;">
+                    <strong>Vamos transformar sua perspectiva de crescimento em resultados concretos e mensuráveis!</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Business Check-up elaborado para <span class="footer-highlight">JOAO Brioli</span></p>
+            <p>Empresa: <span class="footer-highlight">Brioli Consultoria</span></p>
+            <p>Data: <span class="footer-highlight">12 de Janeiro de 2025</span></p>
+            <p style="margin-top: 20px; font-size: 0.9em;">
+                © 2025 PRISMA Business Hub - Diagnóstico Empresarial Personalizado
+            </p>
+        </div>
+    </div>
+</body>
+</html>
