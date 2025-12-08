@@ -1,0 +1,579 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Prisma</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #1e2430;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; }
+        
+        .header {
+            background: linear-gradient(135deg, #1e2430 0%, #2a3544 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: #e8e2d8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(191, 161, 113, 0.1) 0%, transparent 70%);
+        }
+        
+        .logo-section { margin-bottom: 30px; position: relative; z-index: 1; }
+        .company-name {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 3em; color: #bfa171;
+            margin-bottom: 10px; letter-spacing: 4px;
+        }
+        .tagline {
+            font-size: 1.2em; color: #e8e2d8;
+            letter-spacing: 2px; font-weight: 300;
+        }
+        
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.2em; margin-top: 40px;
+            position: relative; z-index: 1;
+        }
+        .subtitle {
+            font-size: 1.1em; margin-top: 15px;
+            font-weight: 300; position: relative; z-index: 1;
+        }
+        
+        .company-info {
+            background-color: #e8e2d8;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            padding: 20px; background-color: white;
+            border-left: 4px solid #bfa171;
+        }
+        .info-label {
+            font-size: 0.85em; text-transform: uppercase;
+            color: #666; margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .info-value {
+            font-size: 1.2em; font-weight: 600; color: #1e2430;
+        }
+        
+        .section { padding: 50px 40px; }
+        .section-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2em; color: #1e2430;
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 3px solid #bfa171;
+        }
+        .section-subtitle {
+            font-size: 1.3em; color: #bfa171;
+            margin-top: 30px; margin-bottom: 20px; font-weight: 600;
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; color: white;
+        }
+        .challenge-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.4em; margin-bottom: 15px;
+        }
+        .challenge-box p { font-size: 1.1em; line-height: 1.8; }
+        
+        .maturity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; margin: 30px 0;
+        }
+        .pillar-card {
+            background-color: #f9f9f9;
+            padding: 25px; border-radius: 8px;
+            border-top: 4px solid #bfa171;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .pillar-card.critical { border-top-color: #d32f2f; background-color: #fff5f5; }
+        .pillar-card.warning { border-top-color: #ff9800; background-color: #fffaf0; }
+        .pillar-card.good { border-top-color: #4caf50; background-color: #f1f8f4; }
+        
+        .pillar-name { font-size: 1.2em; font-weight: 700; color: #1e2430; margin-bottom: 15px; }
+        .score-display {
+            font-size: 3em; font-weight: 700;
+            text-align: center; margin: 20px 0;
+        }
+        .score-display.critical { color: #d32f2f; }
+        .score-display.warning { color: #ff9800; }
+        .score-display.good { color: #4caf50; }
+        
+        .score-label {
+            text-align: center; font-size: 0.9em;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 10px; font-weight: 600;
+        }
+        .score-label.critical { color: #d32f2f; }
+        .score-label.warning { color: #ff9800; }
+        .score-label.good { color: #4caf50; }
+        
+        .diagnostic-card {
+            background-color: #f9f9f9;
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; border-left: 6px solid #bfa171;
+        }
+        .diagnostic-card.critical { border-left-color: #d32f2f; background-color: #fff5f5; }
+        .diagnostic-card.warning { border-left-color: #ff9800; background-color: #fffaf0; }
+        .diagnostic-card.good { border-left-color: #4caf50; background-color: #f1f8f4; }
+        
+        table {
+            width: 100%; margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th {
+            background-color: #1e2430; color: white;
+            padding: 15px; text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover { background-color: #fafafa; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px; border-radius: 4px;
+            font-size: 0.9em; font-weight: 600;
+        }
+        .status-critical { background-color: #ffebee; color: #d32f2f; }
+        .status-good { background-color: #e8f5e9; color: #4caf50; }
+        
+        .symptoms-list {
+            background-color: #fff5f5;
+            padding: 25px; border-radius: 8px;
+            margin: 20px 0; border-left: 6px solid #d32f2f;
+        }
+        .symptoms-list h4 {
+            color: #d32f2f; font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .symptoms-list ul {
+            list-style: none; padding: 0;
+        }
+        .symptoms-list li {
+            padding: 10px 0 10px 30px;
+            position: relative; line-height: 1.6;
+        }
+        .symptoms-list li:before {
+            content: "⚠️";
+            position: absolute; left: 0;
+        }
+        
+        .consequences-box {
+            background: linear-gradient(135deg, #d32f2f 0%, #e57373 100%);
+            color: white; padding: 30px;
+            border-radius: 8px; margin: 20px 0;
+        }
+        .consequences-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.5em; margin-bottom: 15px;
+        }
+        .consequences-box p {
+            font-size: 1.05em; line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .next-step-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 40px; border-radius: 8px;
+            text-align: center; color: white;
+        }
+        .next-step-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.8em; margin-bottom: 20px;
+        }
+        .next-step-box p {
+            font-size: 1.15em; line-height: 1.8;
+        }
+        
+        .footer {
+            background-color: #1e2430;
+            color: #e8e2d8; padding: 50px 40px;
+            text-align: center;
+        }
+        .footer-highlight {
+            color: #bfa171; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo-section">
+                <div class="company-name">PRISMA</div>
+                <div class="tagline">BUSINESS HUB</div>
+            </div>
+            <h1>Business Check-up para JOAO Brioli</h1>
+            <div class="subtitle">Relatório Completo - Dezembro 2024</div>
+        </div>
+
+        <!-- COMPANY INFO -->
+        <div class="company-info">
+            <div class="info-item">
+                <div class="info-label">EMPRESA</div>
+                <div class="info-value">Brioli Consultoria</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">SETOR</div>
+                <div class="info-value">Consultoria</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">FATURAMENTO ANUAL</div>
+                <div class="info-value">Mais de 100 Milhões R$ / ano</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">RESPONSÁVEL</div>
+                <div class="info-value">JOAO Brioli</div>
+            </div>
+        </div>
+
+        <!-- SECTION 1: VISÃO GERAL -->
+        <div class="section">
+            <h2 class="section-title">1. Visão Geral do Negócio</h2>
+            
+            <div class="challenge-box">
+                <h3>🎯 Desafio Principal Identificado</h3>
+                <p><strong>Acelerar 0 Crescimento</strong> - Com três prioridades estratégicas focadas em: gerar novas oportunidades de negócio, otimizar preços e margens, e definir estratégias de crescimento. Este diagnóstico revelará os gargalos que impedem sua empresa de atingir o próximo patamar de faturamento.</p>
+            </div>
+
+            <div class="section-subtitle">🔍 Maturidade por Pilar de Gestão</div>
+            
+            <div class="maturity-grid">
+                <div class="pillar-card good">
+                    <div class="pillar-name">Estratégia e Planejamento</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Performance de Vendas</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+                <div class="pillar-card critical">
+                    <div class="pillar-name">Estratégia de Marketing</div>
+                    <div class="score-display critical">1/5</div>
+                    <div class="score-label critical">CRÍTICO</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Eficiência Operacional</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Gestão Financeira</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Liderança e Pessoas</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Inovação e Adaptabilidade</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+                <div class="pillar-card good">
+                    <div class="pillar-name">Autonomia do Empresário</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">BOM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: DIAGNÓSTICO DETALHADO -->
+        <div class="section">
+            <h2 class="section-title">2. Diagnóstico Detalhado por Pilar</h2>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Estratégia e Planejamento - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui planejamento estratégico estruturado</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Define metas claras e mensuráveis</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Acompanha indicadores de performance</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Performance de Vendas - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui processo de vendas estruturado</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Equipe treinada e capacitada</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Controla e otimiza funil de vendas</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card critical">
+                <h3>⚠️ Estratégia de Marketing - CRÍTICO (1/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui estratégia de marketing estruturada</td>
+                            <td><span class="status-badge status-critical">✗ NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Gera leads qualificados consistentemente</td>
+                            <td><span class="status-badge status-critical">✗ NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mede ROI dos investimentos em marketing</td>
+                            <td><span class="status-badge status-critical">✗ NÃO</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Eficiência Operacional - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Processos documentados e padronizados</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Usa tecnologia para automatizar</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Monitora indicadores operacionais</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Gestão Financeira - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Controla fluxo de caixa rigorosamente</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Conhece custos e precifica corretamente</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Usa indicadores financeiros para decisões</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Liderança e Pessoas - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Desenvolve líderes na organização</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Investe no desenvolvimento da equipe</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mantém equipe engajada e motivada</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Inovação e Adaptabilidade - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monitora tendências e oportunidades</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Testa e experimenta novas soluções</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Adapta-se rapidamente às mudanças</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card good">
+                <h3>✅ Autonomia do Empresário - BOM (4/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Empresa funciona sem presença constante</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Delega responsabilidades efetivamente</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                        <tr>
+                            <td>Foca no estratégico em vez do operacional</td>
+                            <td><span class="status-badge status-good">✓ SIM</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: PILARES CRÍTICOS - SINTOMAS -->
+        <div class="section">
+            <h2 class="section-title">3. Áreas Críticas - Sintomas Identificados</h2>
+            
+            <div class="symptoms-list">
+                <h4>⚠️ ESTRATÉGIA DE MARKETING - Sintomas Detectados</h4>
+                <ul>
+                    <li>Vendas imprevisíveis sem origem clara dos clientes</li>
+                    <li>Marca desconhecida no mercado, baixo reconhecimento</li>
+                    <li>Dificuldade em definir e alcançar cliente ideal</li>
+                    <li>Investimentos em marketing sem planejamento estratégico</li>
+                    <li>Falta de consistência na comunicação da marca</li>
+                    <li>Dificuldade constante em atrair leads qualificados</li>
+                    <li>Sem clareza sobre ROI dos investimentos em marketing</li>
+                    <li>Impossibilidade de otimizar campanhas por falta de dados</li>
+                    <li>Desconhecimento sobre quais canais são mais eficazes</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECTION 4: CONSEQUÊNCIAS DOS PILARES CRÍTICOS -->
+        <div class="section">
+            <h2 class="section-title">4. Impacto no seu Desafio Principal</h2>
+            
+            <div class="consequences-box">
+                <h3>💥 Como isso Impacta "Acelerar 0 Crescimento"</h3>
+                <p><strong>Estratégia de Marketing Deficiente:</strong> Seu negócio é um segredo bem guardado, morrendo sem novos clientes! Cada centavo em marketing é um tiro no escuro, drenando seu caixa sem gerar resultados!</p>
+                <p><strong>Conexão Direta:</strong> Suas três prioridades (gerar novas oportunidades de negócio, otimizar preços e margens, e definir estratégias de crescimento) estão sendo sabotadas pela falta de uma estratégia de marketing estruturada. Sem ela, você não consegue gerar oportunidades consistentes, não conhece o valor percebido pelo mercado para otimizar preços, e não tem dados para definir estratégias de crescimento eficazes.</p>
+                <p><strong>Resultado:</strong> Mesmo com um faturamento robusto de mais de 100 milhões, seu crescimento está limitado pela invisibilidade no mercado e dependência excessiva de canais tradicionais, impedindo a aceleração do crescimento que você busca.</p>
+            </div>
+        </div>
+
+        <!-- NEXT STEPS -->
+        <div class="section">
+            <div class="next-step-box">
+                <h3>🚀 Próximos Passos</h3>
+                <p>Baseado no diagnóstico da Brioli Consultoria, recomendamos participar da nossa <strong>Business Clinic</strong> para desenvolver uma estratégia de marketing estruturada que desbloqueie seu potencial de crescimento e transforme os gargalos identificados em vantagens competitivas.</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>Relatório gerado para <span class="footer-highlight">JOAO Brioli</span> - <span class="footer-highlight">Brioli Consultoria</span></p>
+            <p style="margin-top: 10px;">Dezembro 2024 - PRISMA Business Hub</p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">Este diagnóstico foi elaborado com base nas informações fornecidas e representa uma análise preliminar da maturidade empresarial.</p>
+        </div>
+    </div>
+</body>
+</html>
+```
