@@ -1,0 +1,576 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Prisma</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #1e2430;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; }
+        
+        .header {
+            background: linear-gradient(135deg, #1e2430 0%, #2a3544 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: #e8e2d8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(191, 161, 113, 0.1) 0%, transparent 70%);
+        }
+        
+        .logo-section { margin-bottom: 30px; position: relative; z-index: 1; }
+        .company-name {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 3em; color: #bfa171;
+            margin-bottom: 10px; letter-spacing: 4px;
+        }
+        .tagline {
+            font-size: 1.2em; color: #e8e2d8;
+            letter-spacing: 2px; font-weight: 300;
+        }
+        
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.2em; margin-top: 40px;
+            position: relative; z-index: 1;
+        }
+        .subtitle {
+            font-size: 1.1em; margin-top: 15px;
+            font-weight: 300; position: relative; z-index: 1;
+        }
+        
+        .company-info {
+            background-color: #e8e2d8;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            padding: 20px; background-color: white;
+            border-left: 4px solid #bfa171;
+        }
+        .info-label {
+            font-size: 0.85em; text-transform: uppercase;
+            color: #666; margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .info-value {
+            font-size: 1.2em; font-weight: 600; color: #1e2430;
+        }
+        
+        .section { padding: 50px 40px; }
+        .section-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2em; color: #1e2430;
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 3px solid #bfa171;
+        }
+        .section-subtitle {
+            font-size: 1.3em; color: #bfa171;
+            margin-top: 30px; margin-bottom: 20px; font-weight: 600;
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; color: white;
+        }
+        .challenge-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.4em; margin-bottom: 15px;
+        }
+        .challenge-box p { font-size: 1.1em; line-height: 1.8; }
+        
+        .maturity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; margin: 30px 0;
+        }
+        .pillar-card {
+            background-color: #f9f9f9;
+            padding: 25px; border-radius: 8px;
+            border-top: 4px solid #bfa171;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .pillar-card.critical { border-top-color: #d32f2f; background-color: #fff5f5; }
+        .pillar-card.warning { border-top-color: #ff9800; background-color: #fffaf0; }
+        .pillar-card.good { border-top-color: #4caf50; background-color: #f1f8f4; }
+        
+        .pillar-name { font-size: 1.2em; font-weight: 700; color: #1e2430; margin-bottom: 15px; }
+        .score-display {
+            font-size: 3em; font-weight: 700;
+            text-align: center; margin: 20px 0;
+        }
+        .score-display.critical { color: #d32f2f; }
+        .score-display.warning { color: #ff9800; }
+        .score-display.good { color: #4caf50; }
+        
+        .score-label {
+            text-align: center; font-size: 0.9em;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 10px; font-weight: 600;
+        }
+        .score-label.critical { color: #d32f2f; }
+        .score-label.warning { color: #ff9800; }
+        .score-label.good { color: #4caf50; }
+        
+        .diagnostic-card {
+            background-color: #f9f9f9;
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; border-left: 6px solid #bfa171;
+        }
+        .diagnostic-card.critical { border-left-color: #d32f2f; background-color: #fff5f5; }
+        .diagnostic-card.warning { border-left-color: #ff9800; background-color: #fffaf0; }
+        .diagnostic-card.good { border-left-color: #4caf50; background-color: #f1f8f4; }
+        
+        table {
+            width: 100%; margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th {
+            background-color: #1e2430; color: white;
+            padding: 15px; text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover { background-color: #fafafa; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px; border-radius: 4px;
+            font-size: 0.9em; font-weight: 600;
+        }
+        .status-critical { background-color: #ffebee; color: #d32f2f; }
+        .status-good { background-color: #e8f5e9; color: #4caf50; }
+        
+        .symptoms-list {
+            background-color: #fff5f5;
+            padding: 25px; border-radius: 8px;
+            margin: 20px 0; border-left: 6px solid #d32f2f;
+        }
+        .symptoms-list h4 {
+            color: #d32f2f; font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .symptoms-list ul {
+            list-style: none; padding: 0;
+        }
+        .symptoms-list li {
+            padding: 10px 0 10px 30px;
+            position: relative; line-height: 1.6;
+        }
+        .symptoms-list li:before {
+            content: "⚠️";
+            position: absolute; left: 0;
+        }
+        
+        .consequences-box {
+            background: linear-gradient(135deg, #d32f2f 0%, #e57373 100%);
+            color: white; padding: 30px;
+            border-radius: 8px; margin: 20px 0;
+        }
+        .consequences-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.5em; margin-bottom: 15px;
+        }
+        .consequences-box p {
+            font-size: 1.05em; line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .next-step-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 40px; border-radius: 8px;
+            text-align: center; color: white;
+        }
+        .next-step-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.8em; margin-bottom: 20px;
+        }
+        .next-step-box p {
+            font-size: 1.15em; line-height: 1.8;
+        }
+        
+        .footer {
+            background-color: #1e2430;
+            color: #e8e2d8; padding: 50px 40px;
+            text-align: center;
+        }
+        .footer-highlight {
+            color: #bfa171; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo-section">
+                <div class="company-name">PRISMA</div>
+                <div class="tagline">BUSINESS HUB</div>
+            </div>
+            <h1>Business Check-up Personalizado</h1>
+            <p class="subtitle">Caue Brioli • Dezembro 2024</p>
+        </div>
+
+        <!-- INFORMAÇÕES DA EMPRESA -->
+        <div class="company-info">
+            <div class="info-item">
+                <div class="info-label">Empresa</div>
+                <div class="info-value">Flexliving</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Setor</div>
+                <div class="info-value">Agro</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Faturamento Anual</div>
+                <div class="info-value">Entre 5 e 10 Milhões R$</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Responsável</div>
+                <div class="info-value">Caue Brioli</div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 1: VISÃO GERAL -->
+        <div class="section">
+            <h2 class="section-title">1. Diagnóstico Geral</h2>
+            
+            <div class="challenge-box">
+                <h3>Desafio Principal Identificado</h3>
+                <p><strong>Prioridade selecionada:</strong> Definir estratégias de crescimento</p>
+                <p><strong>Desafio relatado:</strong> POKDeasa</p>
+            </div>
+
+            <h3 class="section-subtitle">Mapa de Maturidade - 8 Pilares Empresariais</h3>
+            
+            <div class="maturity-grid">
+                <div class="pillar-card good">
+                    <div class="pillar-name">Estratégia e Planejamento</div>
+                    <div class="score-display good">4/5</div>
+                    <div class="score-label good">Bom Nível</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Estratégia de Marketing</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Performance de Vendas</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Eficiência Operacional</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Gestão Financeira</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Liderança e Pessoas</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Inovação e Adaptabilidade</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Autonomia do Empresário</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 2: DIAGNÓSTICO DETALHADO -->
+        <div class="section">
+            <h2 class="section-title">2. Diagnóstico Detalhado por Pilar</h2>
+
+            <div class="diagnostic-card good">
+                <h3>Estratégia e Planejamento - Score: 4/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui visão de futuro clara e documentada para os próximos 3-5 anos</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tem plano estratégico formal, com metas e indicadores definidos</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Existe alinhamento claro entre estratégia e ações diárias das equipes</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Estratégia de Marketing - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui estratégia de marketing documentada e executa consistentemente</td>
+                            <td><span class="status-badge status-good">Sim</span></td>
+                        </tr>
+                        <tr>
+                            <td>Investe regularmente em ações de marketing para atrair novos leads</td>
+                            <td><span class="status-badge status-good">Sim</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mede o ROI das campanhas de marketing para otimizá-las</td>
+                            <td><span class="status-badge status-good">Sim</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Performance de Vendas - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui funil de vendas claramente definido e acompanha regularmente</td>
+                            <td><span class="status-badge status-good">Sim</span></td>
+                        </tr>
+                        <tr>
+                            <td>Equipe utiliza CRM ou playbook comercial para padronizar o processo</td>
+                            <td><span class="status-badge status-good">Sim</span></td>
+                        </tr>
+                        <tr>
+                            <td>Atinge regularmente as metas de vendas e possui programa de desenvolvimento</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Eficiência Operacional - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Processos internos são documentados, otimizados e revisados periodicamente</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Utiliza ferramentas de tecnologia para aumentar eficiência</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tem dashboards que fornecem informações em tempo real</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Gestão Financeira - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tem clareza sobre custos e precificação garante lucratividade</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Acompanha demonstrativos financeiros para decisões estratégicas</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Possui indicadores financeiros claros e metas de rentabilidade</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Liderança e Pessoas - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui plano de desenvolvimento para líderes e colaboradores chave</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Possui cultura de feedback contínuo e investe em capacitação</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Consegue delegar tarefas estratégicas sem micro gerenciar</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Inovação e Adaptabilidade - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui processo formal para identificar tendências e oportunidades</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tem capacidade de testar e validar rapidamente novas ofertas</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Se adapta rapidamente a mudanças do mercado ou feedback</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Autonomia do Empresário - Score: 2/5</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critério Avaliado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Consegue se ausentar por mais de uma semana sem impactos</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Possui processos que permitem foco em tarefas estratégicas</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tem tempo dedicado para planejamento estratégico</td>
+                            <td><span class="status-badge status-critical">Não</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 3: SINTOMAS CRÍTICOS -->
+        <div class="section">
+            <h2 class="section-title">3. Sintomas Críticos Identificados</h2>
+            <p>Não foram identificados pilares em nível crítico (score 1/5) que necessitem atenção imediata.</p>
+            <p>Porém, 7 dos 8 pilares estão em nível de atenção (score 2-3/5), indicando oportunidades significativas de melhoria para alavancar o crescimento da Flexliving.</p>
+        </div>
+
+        <!-- SEÇÃO 4: CONSEQUÊNCIAS -->
+        <div class="section">
+            <h2 class="section-title">4. Impactos no Negócio</h2>
+            
+            <div class="consequences-box">
+                <h3>Análise do Impacto Geral</h3>
+                <p>Caue, embora a Flexliving não apresente pilares em estado crítico, a concentração de 7 pilares em nível de atenção cria um efeito dominó que está impactando diretamente sua capacidade de <strong>definir estratégias de crescimento</strong> - seu desafio principal relatado.</p>
+                
+                <p>Com múltiplas áreas funcionando abaixo do potencial, a empresa está perdendo oportunidades de crescimento acelerado e pode estar se encaminhando para a estagnação se essas questões não forem endereçadas estrategicamente.</p>
+                
+                <p>No setor do Agro, com um faturamento entre 5-10 milhões, essa situação representa uma janela de oportunidade significativa que precisa ser aproveitada antes que a concorrência tome a dianteira.</p>
+            </div>
+        </div>
+
+        <!-- PRÓXIMOS PASSOS -->
+        <div class="section">
+            <div class="next-step-box">
+                <h3>Próximo Passo Recomendado</h3>
+                <p>Caue, com base neste diagnóstico da Flexliving, recomendamos uma <strong>Business Clinic estratégica</strong> para desenvolver um plano de ação focado nos pilares que mais impactam seu crescimento no setor do Agro.</p>
+                <p>Nossa consultoria especializada vai ajudar você a priorizar as ações certas e implementar as estratégias que vão tirar a Flexliving do patamar atual e acelerar seu crescimento de forma sustentável.</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>Diagnóstico personalizado preparado para <span class="footer-highlight">Caue Brioli</span> - <span class="footer-highlight">Flexliving</span></p>
+            <p>Dezembro 2024 | PRISMA Business Hub</p>
+        </div>
+    </div>
+</body>
+</html>
+```
