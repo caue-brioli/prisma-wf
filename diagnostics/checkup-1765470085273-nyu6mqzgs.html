@@ -1,0 +1,410 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Prisma</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #1e2430;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; }
+        
+        .header {
+            background: linear-gradient(135deg, #1e2430 0%, #2a3544 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: #e8e2d8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(191, 161, 113, 0.1) 0%, transparent 70%);
+        }
+        
+        .logo-section { margin-bottom: 30px; position: relative; z-index: 1; }
+        .company-name {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 3em; color: #bfa171;
+            margin-bottom: 10px; letter-spacing: 4px;
+        }
+        .tagline {
+            font-size: 1.2em; color: #e8e2d8;
+            letter-spacing: 2px; font-weight: 300;
+        }
+        
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.2em; margin-top: 40px;
+            position: relative; z-index: 1;
+        }
+        .subtitle {
+            font-size: 1.1em; margin-top: 15px;
+            font-weight: 300; position: relative; z-index: 1;
+        }
+        
+        .company-info {
+            background-color: #e8e2d8;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            padding: 20px; background-color: white;
+            border-left: 4px solid #bfa171;
+        }
+        .info-label {
+            font-size: 0.85em; text-transform: uppercase;
+            color: #666; margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .info-value {
+            font-size: 1.2em; font-weight: 600; color: #1e2430;
+        }
+        
+        .section { padding: 50px 40px; }
+        .section-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2em; color: #1e2430;
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 3px solid #bfa171;
+        }
+        .section-subtitle {
+            font-size: 1.3em; color: #bfa171;
+            margin-top: 30px; margin-bottom: 20px; font-weight: 600;
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; color: white;
+        }
+        .challenge-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.4em; margin-bottom: 15px;
+        }
+        .challenge-box p { font-size: 1.1em; line-height: 1.8; }
+        
+        .maturity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; margin: 30px 0;
+        }
+        .pillar-card {
+            background-color: #f9f9f9;
+            padding: 25px; border-radius: 8px;
+            border-top: 4px solid #bfa171;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .pillar-card.critical { border-top-color: #d32f2f; background-color: #fff5f5; }
+        .pillar-card.warning { border-top-color: #ff9800; background-color: #fffaf0; }
+        .pillar-card.good { border-top-color: #4caf50; background-color: #f1f8f4; }
+        
+        .pillar-name { font-size: 1.2em; font-weight: 700; color: #1e2430; margin-bottom: 15px; }
+        .score-display {
+            font-size: 3em; font-weight: 700;
+            text-align: center; margin: 20px 0;
+        }
+        .score-display.critical { color: #d32f2f; }
+        .score-display.warning { color: #ff9800; }
+        .score-display.good { color: #4caf50; }
+        
+        .score-label {
+            text-align: center; font-size: 0.9em;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 10px; font-weight: 600;
+        }
+        .score-label.critical { color: #d32f2f; }
+        .score-label.warning { color: #ff9800; }
+        .score-label.good { color: #4caf50; }
+        
+        .diagnostic-card {
+            background-color: #f9f9f9;
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; border-left: 6px solid #bfa171;
+        }
+        .diagnostic-card.critical { border-left-color: #d32f2f; background-color: #fff5f5; }
+        .diagnostic-card.warning { border-left-color: #ff9800; background-color: #fffaf0; }
+        .diagnostic-card.good { border-left-color: #4caf50; background-color: #f1f8f4; }
+        
+        table {
+            width: 100%; margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th {
+            background-color: #1e2430; color: white;
+            padding: 15px; text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover { background-color: #fafafa; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px; border-radius: 4px;
+            font-size: 0.9em; font-weight: 600;
+        }
+        .status-critical { background-color: #ffebee; color: #d32f2f; }
+        .status-good { background-color: #e8f5e9; color: #4caf50; }
+        
+        .symptoms-list {
+            background-color: #fff5f5;
+            padding: 25px; border-radius: 8px;
+            margin: 20px 0; border-left: 6px solid #d32f2f;
+        }
+        .symptoms-list h4 {
+            color: #d32f2f; font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .symptoms-list ul {
+            list-style: none; padding: 0;
+        }
+        .symptoms-list li {
+            padding: 10px 0 10px 30px;
+            position: relative; line-height: 1.6;
+        }
+        .symptoms-list li:before {
+            content: "⚠️";
+            position: absolute; left: 0;
+        }
+        
+        .consequences-box {
+            background: linear-gradient(135deg, #d32f2f 0%, #e57373 100%);
+            color: white; padding: 30px;
+            border-radius: 8px; margin: 20px 0;
+        }
+        .consequences-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.5em; margin-bottom: 15px;
+        }
+        .consequences-box p {
+            font-size: 1.05em; line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .next-step-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 40px; border-radius: 8px;
+            text-align: center; color: white;
+        }
+        .next-step-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.8em; margin-bottom: 20px;
+        }
+        .next-step-box p {
+            font-size: 1.15em; line-height: 1.8;
+        }
+        
+        .footer {
+            background-color: #1e2430;
+            color: #e8e2d8; padding: 50px 40px;
+            text-align: center;
+        }
+        .footer-highlight {
+            color: #bfa171; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-section">
+                <h1 class="company-name">PRISMA</h1>
+                <p class="tagline">BUSINESS HUB</p>
+            </div>
+            <h1>Business Check-up Personalizado</h1>
+            <p class="subtitle">Diagnóstico empresarial gerado em 27 de dezembro de 2024</p>
+        </header>
+
+        <!-- COMPANY INFO -->
+        <div class="company-info">
+            <div class="info-item">
+                <div class="info-label">Faturamento Anual</div>
+                <div class="info-value">Mais de 100 Milhões R$ / ano</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Categoria Empresarial</div>
+                <div class="info-value">Grande Empresa</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Data do Diagnóstico</div>
+                <div class="info-value">27 de dezembro de 2024</div>
+            </div>
+        </div>
+
+        <!-- SECTION 1: VISÃO GERAL -->
+        <section class="section">
+            <h2 class="section-title">1. Visão Geral do Diagnóstico</h2>
+            
+            <div class="challenge-box">
+                <h3>Perfil Empresarial Identificado</h3>
+                <p>Com um faturamento anual superior a 100 milhões de reais, sua empresa já demonstrou capacidade de crescimento significativo. No entanto, grandes empresas enfrentam desafios únicos relacionados à escala, eficiência operacional e manutenção da competitividade em mercados complexos.</p>
+            </div>
+
+            <h3 class="section-subtitle">Maturidade dos Pilares Empresariais</h3>
+            
+            <div class="maturity-grid">
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Estratégia e Planejamento</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Performance de Vendas</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Estratégia de Marketing</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Eficiência Operacional</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Gestão Financeira</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Liderança e Pessoas</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Inovação e Adaptabilidade</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+                
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Autonomia do Empresário</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">Necessita Atenção</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: ANÁLISE DETALHADA -->
+        <section class="section">
+            <h2 class="section-title">2. Análise Detalhada por Pilar</h2>
+            
+            <p><strong>Observação:</strong> Com base nos dados disponíveis (apenas o faturamento), apresentamos uma análise preliminar. Para uma avaliação completa e personalizada, seria necessário ter acesso às respostas específicas de cada pilar do questionário.</p>
+
+            <div class="diagnostic-card warning">
+                <h3>Estratégia e Planejamento</h3>
+                <p>Para empresas do seu porte, o planejamento estratégico é fundamental para manter a competitividade e sustentar o crescimento.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Área de Avaliação</th>
+                            <th>Status Estimado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Planejamento estratégico formalizado</td>
+                            <td><span class="status-badge status-good">Provável</span></td>
+                        </tr>
+                        <tr>
+                            <td>Alinhamento organizacional</td>
+                            <td><span class="status-badge status-good">Provável</span></td>
+                        </tr>
+                        <tr>
+                            <td>Monitoramento de KPIs</td>
+                            <td><span class="status-badge status-good">Provável</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Performance de Vendas</h3>
+                <p>Empresas de grande porte geralmente possuem estruturas de vendas organizadas, mas sempre há oportunidades de otimização.</p>
+            </div>
+
+            <div class="diagnostic-card warning">
+                <h3>Gestão Financeira</h3>
+                <p>Com o faturamento significativo, é provável que já existam controles financeiros estabelecidos, mas a sofisticação pode ser aprimorada.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 3: OPORTUNIDADES DE MELHORIA -->
+        <section class="section">
+            <h2 class="section-title">3. Principais Oportunidades para Grandes Empresas</h2>
+            
+            <div class="symptoms-list">
+                <h4>Desafios Típicos de Empresas de Grande Porte</h4>
+                <ul>
+                    <li>Burocracia excessiva que pode reduzir agilidade</li>
+                    <li>Dificuldade de comunicação entre diferentes níveis hierárquicos</li>
+                    <li>Perda de agilidade na tomada de decisões</li>
+                    <li>Necessidade de maior inovação para manter competitividade</li>
+                    <li>Complexidade na gestão de múltiplas unidades ou regiões</li>
+                    <li>Desafios na retenção de talentos-chave</li>
+                    <li>Necessidade de transformação digital contínua</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 4: IMPACTOS E CONSEQUÊNCIAS -->
+        <section class="section">
+            <h2 class="section-title">4. Potenciais Impactos no Crescimento</h2>
+            
+            <div class="consequences-box">
+                <h3>Riscos para Empresas de Grande Porte</h3>
+                <p>Mesmo com um faturamento robusto, empresas grandes podem enfrentar desafios de escala que, se não endereçados, podem impactar o crescimento futuro e a sustentabilidade competitiva.</p>
+                <p>A complexidade operacional pode se tornar um gargalo se os processos não evoluírem junto com o crescimento da organização.</p>
+            </div>
+        </section>
+
+        <!-- NEXT STEPS -->
+        <div class="section">
+            <div class="next-step-box">
+                <h3>Próximos Passos Recomendados</h3>
+                <p>Para uma análise mais aprofundada e personalizada da sua empresa de grande porte, recomendamos uma <strong>Business Clinic</strong> completa, onde poderemos mapear com precisão os pontos de melhoria específicos e desenvolver um plano de ação estratégico.</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>Este diagnóstico foi gerado em <span class="footer-highlight">27 de dezembro de 2024</span></p>
+            <p>Para mais informações sobre como otimizar sua empresa de grande porte, entre em contato com a equipe PRISMA Business Hub</p>
+        </footer>
+    </div>
+</body>
+</html>
+```
