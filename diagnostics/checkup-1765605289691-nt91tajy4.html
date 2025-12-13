@@ -1,0 +1,433 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Check-up - Prisma</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            color: #1e2430;
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; }
+        
+        .header {
+            background: linear-gradient(135deg, #1e2430 0%, #2a3544 100%);
+            padding: 60px 40px;
+            text-align: center;
+            color: #e8e2d8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(191, 161, 113, 0.1) 0%, transparent 70%);
+        }
+        
+        .logo-section { margin-bottom: 30px; position: relative; z-index: 1; }
+        .company-name {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 3em; color: #bfa171;
+            margin-bottom: 10px; letter-spacing: 4px;
+        }
+        .tagline {
+            font-size: 1.2em; color: #e8e2d8;
+            letter-spacing: 2px; font-weight: 300;
+        }
+        
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.2em; margin-top: 40px;
+            position: relative; z-index: 1;
+        }
+        .subtitle {
+            font-size: 1.1em; margin-top: 15px;
+            font-weight: 300; position: relative; z-index: 1;
+        }
+        
+        .company-info {
+            background-color: #e8e2d8;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .info-item {
+            padding: 20px; background-color: white;
+            border-left: 4px solid #bfa171;
+        }
+        .info-label {
+            font-size: 0.85em; text-transform: uppercase;
+            color: #666; margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .info-value {
+            font-size: 1.2em; font-weight: 600; color: #1e2430;
+        }
+        
+        .section { padding: 50px 40px; }
+        .section-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2em; color: #1e2430;
+            margin-bottom: 30px; padding-bottom: 15px;
+            border-bottom: 3px solid #bfa171;
+        }
+        .section-subtitle {
+            font-size: 1.3em; color: #bfa171;
+            margin-top: 30px; margin-bottom: 20px; font-weight: 600;
+        }
+        
+        .challenge-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; color: white;
+        }
+        .challenge-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.4em; margin-bottom: 15px;
+        }
+        .challenge-box p { font-size: 1.1em; line-height: 1.8; }
+        
+        .maturity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; margin: 30px 0;
+        }
+        .pillar-card {
+            background-color: #f9f9f9;
+            padding: 25px; border-radius: 8px;
+            border-top: 4px solid #bfa171;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .pillar-card.critical { border-top-color: #d32f2f; background-color: #fff5f5; }
+        .pillar-card.warning { border-top-color: #ff9800; background-color: #fffaf0; }
+        .pillar-card.good { border-top-color: #4caf50; background-color: #f1f8f4; }
+        
+        .pillar-name { font-size: 1.2em; font-weight: 700; color: #1e2430; margin-bottom: 15px; }
+        .score-display {
+            font-size: 3em; font-weight: 700;
+            text-align: center; margin: 20px 0;
+        }
+        .score-display.critical { color: #d32f2f; }
+        .score-display.warning { color: #ff9800; }
+        .score-display.good { color: #4caf50; }
+        
+        .score-label {
+            text-align: center; font-size: 0.9em;
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 10px; font-weight: 600;
+        }
+        .score-label.critical { color: #d32f2f; }
+        .score-label.warning { color: #ff9800; }
+        .score-label.good { color: #4caf50; }
+        
+        .diagnostic-card {
+            background-color: #f9f9f9;
+            padding: 30px; border-radius: 8px;
+            margin: 30px 0; border-left: 6px solid #bfa171;
+        }
+        .diagnostic-card.critical { border-left-color: #d32f2f; background-color: #fff5f5; }
+        .diagnostic-card.warning { border-left-color: #ff9800; background-color: #fffaf0; }
+        .diagnostic-card.good { border-left-color: #4caf50; background-color: #f1f8f4; }
+        
+        table {
+            width: 100%; margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th {
+            background-color: #1e2430; color: white;
+            padding: 15px; text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover { background-color: #fafafa; }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px; border-radius: 4px;
+            font-size: 0.9em; font-weight: 600;
+        }
+        .status-critical { background-color: #ffebee; color: #d32f2f; }
+        .status-good { background-color: #e8f5e9; color: #4caf50; }
+        
+        .symptoms-list {
+            background-color: #fff5f5;
+            padding: 25px; border-radius: 8px;
+            margin: 20px 0; border-left: 6px solid #d32f2f;
+        }
+        .symptoms-list h4 {
+            color: #d32f2f; font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        .symptoms-list ul {
+            list-style: none; padding: 0;
+        }
+        .symptoms-list li {
+            padding: 10px 0 10px 30px;
+            position: relative; line-height: 1.6;
+        }
+        .symptoms-list li:before {
+            content: "⚠️";
+            position: absolute; left: 0;
+        }
+        
+        .consequences-box {
+            background: linear-gradient(135deg, #d32f2f 0%, #e57373 100%);
+            color: white; padding: 30px;
+            border-radius: 8px; margin: 20px 0;
+        }
+        .consequences-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.5em; margin-bottom: 15px;
+        }
+        .consequences-box p {
+            font-size: 1.05em; line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .next-step-box {
+            background: linear-gradient(135deg, #bfa171 0%, #d4b883 100%);
+            padding: 40px; border-radius: 8px;
+            text-align: center; color: white;
+        }
+        .next-step-box h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.8em; margin-bottom: 20px;
+        }
+        .next-step-box p {
+            font-size: 1.15em; line-height: 1.8;
+        }
+        
+        .footer {
+            background-color: #1e2430;
+            color: #e8e2d8; padding: 50px 40px;
+            text-align: center;
+        }
+        .footer-highlight {
+            color: #bfa171; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="company-name">PRISMA</div>
+                <div class="tagline">Business Hub</div>
+            </div>
+            <h1>Business Check-up Personalizado</h1>
+            <p class="subtitle">Diagnóstico Estratégico para Rodrigo Santos - 20 de dezembro de 2024</p>
+        </header>
+
+        <div class="company-info">
+            <div class="info-item">
+                <div class="info-label">Empresa</div>
+                <div class="info-value">Rtsantos</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Responsável</div>
+                <div class="info-value">Rodrigo Santos</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Faturamento Anual</div>
+                <div class="info-value">Menos de R$ 500.000</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">E-mail</div>
+                <div class="info-value">rts29@hotmail.com</div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">1. Principais Desafios e Maturidade Empresarial</h2>
+            
+            <div class="challenge-box">
+                <h3>🎯 Desafio Principal da Rtsantos</h3>
+                <p><strong>Qualificar leads e realizar fechamento</strong> - Este é o ponto crítico que está limitando o crescimento da sua empresa. Você enfrenta dificuldades específicas em converter oportunidades em vendas efetivas.</p>
+            </div>
+
+            <h3 class="section-subtitle">Análise de Maturidade dos 8 Pilares Empresariais</h3>
+            <div class="maturity-grid">
+                <div class="pillar-card critical">
+                    <div class="pillar-name">Performance de Vendas</div>
+                    <div class="score-display critical">1/5</div>
+                    <div class="score-label critical">CRÍTICO</div>
+                </div>
+                <div class="pillar-card critical">
+                    <div class="pillar-name">Estratégia de Marketing</div>
+                    <div class="score-display critical">1/5</div>
+                    <div class="score-label critical">CRÍTICO</div>
+                </div>
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Estratégia e Planejamento</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">ATENÇÃO</div>
+                </div>
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Eficiência Operacional</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">ATENÇÃO</div>
+                </div>
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Gestão Financeira</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">ATENÇÃO</div>
+                </div>
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Liderança e Pessoas</div>
+                    <div class="score-display warning">3/5</div>
+                    <div class="score-label warning">ATENÇÃO</div>
+                </div>
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Inovação e Adaptabilidade</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">ATENÇÃO</div>
+                </div>
+                <div class="pillar-card warning">
+                    <div class="pillar-name">Autonomia do Empresário</div>
+                    <div class="score-display warning">2/5</div>
+                    <div class="score-label warning">ATENÇÃO</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">2. Diagnóstico Detalhado dos Pilares</h2>
+
+            <div class="diagnostic-card critical">
+                <h3>🎯 PILAR 2: PERFORMANCE DE VENDAS - Crítico (1/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Questão Diagnóstica</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Possui processo estruturado de vendas com etapas definidas?</td>
+                            <td><span class="status-badge status-critical">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Acompanha métricas de conversão em cada etapa do funil?</td>
+                            <td><span class="status-badge status-critical">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tem sistema de qualificação de leads implementado?</td>
+                            <td><span class="status-badge status-critical">NÃO</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="diagnostic-card critical">
+                <h3>📢 PILAR 3: ESTRATÉGIA DE MARKETING - Crítico (1/5)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Questão Diagnóstica</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tem estratégia clara de geração de leads qualificados?</td>
+                            <td><span class="status-badge status-critical">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mensura ROI dos investimentos em marketing?</td>
+                            <td><span class="status-badge status-critical">NÃO</span></td>
+                        </tr>
+                        <tr>
+                            <td>Possui funil de marketing estruturado?</td>
+                            <td><span class="status-badge status-critical">NÃO</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">3. Sintomas Críticos Identificados</h2>
+
+            <div class="symptoms-list">
+                <h4>🚨 Sintomas da Performance de Vendas Deficiente</h4>
+                <ul>
+                    <li>Perda constante de oportunidades de venda</li>
+                    <li>Taxas de conversão consistentemente baixas</li>
+                    <li>Leads qualificados sendo perdidos no processo</li>
+                    <li>Vendas dependentes de vendedores estrelas</li>
+                    <li>Falta de padronização no processo comercial</li>
+                    <li>Informações de clientes não centralizadas</li>
+                    <li>Metas de vendas constantemente não atingidas</li>
+                    <li>Dificuldade em treinar e capacitar equipe de vendas</li>
+                    <li>Dificuldade em contratar novos talentos comerciais</li>
+                </ul>
+            </div>
+
+            <div class="symptoms-list">
+                <h4>🚨 Sintomas da Estratégia de Marketing Deficiente</h4>
+                <ul>
+                    <li>Vendas completamente imprevisíveis</li>
+                    <li>Marca desconhecida no mercado</li>
+                    <li>Dificuldade em definir cliente ideal</li>
+                    <li>Investimentos em marketing sem planejamento</li>
+                    <li>Falta de consistência na comunicação</li>
+                    <li>Extrema dificuldade em atrair novos leads</li>
+                    <li>Sem clareza sobre retorno dos investimentos</li>
+                    <li>Impossibilidade de otimizar campanhas</li>
+                    <li>Desconhecimento dos canais mais eficazes</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">4. Impacto Crítico no Seu Negócio</h2>
+
+            <div class="consequences-box">
+                <h3>⚠️ Consequências da Performance de Vendas Crítica</h3>
+                <p>Suas vendas são um campo minado de oportunidades perdidas e potencial inexplorado! Sem um sistema, sua equipe vende no feeling, condenando seu negócio à imprevisibilidade!</p>
+                <p><strong>Conexão com seu desafio:</strong> A dificuldade em "qualificar leads e realizar fechamento" é resultado direto da ausência de um processo estruturado de vendas e métricas de acompanhamento.</p>
+            </div>
+
+            <div class="consequences-box">
+                <h3>⚠️ Consequências da Estratégia de Marketing Crítica</h3>
+                <p>Seu negócio é um segredo bem guardado, morrendo sem novos clientes! Cada centavo em marketing é um tiro no escuro, drenando seu caixa sem gerar resultados!</p>
+                <p><strong>Conexão com seu desafio:</strong> Sem estratégia de marketing estruturada, você não consegue gerar leads qualificados consistentemente, dificultando todo o processo de fechamento de vendas.</p>
+            </div>
+        </section>
+
+        <div class="next-step-box">
+            <h3>🚀 Próximo Passo: Business Clinic Personalizada</h3>
+            <p>Rodrigo, identificamos pontos críticos que estão limitando o crescimento da Rtsantos. Nossa Business Clinic foi desenvolvida especificamente para empresários como você que enfrentam desafios em qualificação de leads e fechamento de vendas.</p>
+            <p>Vamos trabalhar juntos para estruturar um sistema eficaz que transforme sua realidade comercial!</p>
+        </div>
+
+        <footer class="footer">
+            <p>Diagnóstico personalizado elaborado para <span class="footer-highlight">Rodrigo Santos</span> da empresa <span class="footer-highlight">Rtsantos</span></p>
+            <p>Data: 20 de dezembro de 2024 | PRISMA Business Hub</p>
+            <p>Este relatório é confidencial e destinado exclusivamente ao uso interno da empresa.</p>
+        </footer>
+    </div>
+</body>
+</html>
+```
